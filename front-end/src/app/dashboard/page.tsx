@@ -22,7 +22,7 @@ import { redirect } from "next/navigation";
 import { ListTasksInterface, NewTaskInterface } from "@/types/task/task.type";
 import { TaskModal } from "./components";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export default function Dashboard() {
 
   function handleTaskShare(taskId: string): void {
     navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_URL}/tasks/${taskId}`
+      `${process.env.NEXT_PUBLIC_URL}/comments?taskId=${taskId}`
     );
   }
 
@@ -233,7 +233,6 @@ export default function Dashboard() {
                       text={task.task}
                       isPublic={task.isPublic}
                       taskValues={task}
-                      variant={"newTask"}
                       handleTaskShare={handleTaskShare}
                       handleTaskDelete={handleOpenTaskDeleteModal}
                       handleTaskUpdate={handleOpenTaskUpdateModal}

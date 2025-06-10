@@ -3,6 +3,7 @@ export * from "./label-box";
 export * from "./button";
 export * from "./textarea";
 export * from "./task/task";
+export * from "./comment/comment";
 export * from "./form-field-error-message";
 export * from "./modals/success-modal";
 export * from "./modals/error-modal";

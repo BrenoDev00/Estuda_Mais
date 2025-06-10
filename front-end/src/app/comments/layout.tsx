@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Página de dashboard.",
+  title: "Comentários",
+  description: "Página de comentários de tarefa.",
 };
 
-export default function DashboardPageLayout({
+export default function CommentsPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
