@@ -90,7 +90,6 @@ export default function CommentsPage() {
           </div>
         </section>
       </main>
-      ;
     </>
   );
 }
