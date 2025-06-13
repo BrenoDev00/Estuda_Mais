@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import { taskRouter } from "./routes/task-routes.js";
+import { commentRouter } from "./routes/comment-routes.js";
 import cors from "cors";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(
 app.use(express.json());
 
 app.use("/tasks", taskRouter);
+app.use("/comments", commentRouter);
 
 function bootstrap() {
   const port = process.env.PORT || 3001;
