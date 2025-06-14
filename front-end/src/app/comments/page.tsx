@@ -1,9 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { Header, Textarea, Button, Comment } from "@/components";
+import { Header, Textarea, Button, Comment, ErrorModal } from "@/components";
+import Loading from "../loading";
+import { useGetComments } from "@/hooks";
+import { useSearchParams } from "next/navigation";
+import { ListCommentsInterface } from "@/types/comment/comment.type";
 
 export default function CommentsPage() {
+  const { comments, commentListError, commentListLoading, refetch } =
+    useGetComments();
+
+  const searchParams = useSearchParams();
+  const currentTaskId = searchParams.get("taskId") as string;
+
+  const currentTask = comments?.find(
+    (comment) => comment?.task?.taskId === currentTaskId
+  ) as ListCommentsInterface;
+
+  const commentsByTask = comments?.filter(
+    (comment) => comment?.task?.taskId === currentTaskId
+  ) as ListCommentsInterface[];
+
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(true);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  if (commentListError)
+    return (
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+        message="Não foi possível carregar os comentários. Tente novamente."
+      />
+    );
+
+  if (commentListLoading) return <Loading />;
+
   return (
     <>
       <Header />
@@ -18,12 +54,12 @@ export default function CommentsPage() {
             id={"task-field"}
             rows={5}
             cols={8}
-            placeholder="Digite sua tarefa..."
             className={twMerge(
               "w-full resize-none",
               "border border border-solid border-dark-gray"
             )}
             disabled={true}
+            value={currentTask?.task?.task}
           />
         </section>
 
@@ -83,10 +119,9 @@ export default function CommentsPage() {
           </h2>
 
           <div className="flex flex-col gap-[14px]">
-            <Comment text="Teste de task sdfjdsjfdsk jskdfjdksjkfjdskjf sdkfdskjf kdsjfkdsjf ksdjfkdsj sjdlfkjdskf kjdskfksdjfkjs djdskfkdskfds sdkfsd" />
-            <Comment text="Teste de task" />
-            <Comment text="Teste de task" />
-            <Comment text="Teste de task" />
+            {commentsByTask?.map((comment) => {
+              return <Comment key={comment.id} comment={comment} />;
+            })}
           </div>
         </section>
       </main>

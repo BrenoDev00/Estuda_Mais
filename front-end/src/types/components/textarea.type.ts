@@ -8,4 +8,5 @@ export interface TextareaProps {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
+  value?: string;
 }
