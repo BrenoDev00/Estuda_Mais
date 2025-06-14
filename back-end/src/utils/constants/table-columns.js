@@ -5,9 +5,10 @@ export const taskColumnsToInsert = ["task", "is_public", "user_email"];
 export const taskColumnsToUpdate = ["task", "is_public"];
 
 export const commentColumnsToGet = [
-  "id",
-  "comment",
-  "created_at",
-  "user_name",
-  "task_id",
+  "public.comment.id",
+  "public.comment.comment",
+  "public.comment.created_at",
+  "public.comment.user_name",
+  "public.comment.task_id",
+  "public.task.task",
 ];

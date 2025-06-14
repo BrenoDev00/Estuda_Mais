@@ -28,6 +28,29 @@ export class BaseRepository {
     }
   }
 
+  async selectWithJoinOrderedBy(
+    columns,
+    leftTable,
+    joinType,
+    rightTable,
+    leftTableId,
+    rightTableId,
+    conditionColumn,
+    ascOrDesc
+  ) {
+    try {
+      const query = `SELECT ${columns.join(
+        ", "
+      )} FROM ${leftTable} ${joinType} ${rightTable} ON ${leftTableId} = ${rightTableId} ORDER BY ${conditionColumn} ${ascOrDesc}`;
+
+      const result = (await pool.query(query)).rows;
+
+      return camelCaseKeys(result, { deep: true });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async insertInto(table, columns, values) {
     const poolConection = pool.connect();
 
