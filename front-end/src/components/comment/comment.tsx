@@ -23,7 +23,9 @@ export function Comment({ comment }: CommentProps) {
   return (
     <CommentContainer className="flex flex-col gap-[11px]">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-[15px]">
+        <div
+          className={twMerge("flex items-center gap-[15px]", "max-sm:flex-col")}
+        >
           <span
             className={twMerge(
               "bg-light-gray py-[5px] px-[11px] rounded-[4px]",
@@ -36,18 +38,25 @@ export function Comment({ comment }: CommentProps) {
 
           {comment.userName === session?.user?.name && (
             <>
-              <FiTrash
+              <div
                 className={twMerge(
-                  "stroke-red w-[20px] h-[20px] cursor-pointer",
-                  "max-sm:h-[18px] max-sm:w-[18px]"
+                  "flex items gap-[15px]",
+                  "max-sm:self-start"
                 )}
-              />
-              <FaRegEdit
-                className={twMerge(
-                  "fill-bg-blue w-[20px] h-[20px] cursor-pointer",
-                  "max-sm:h-[18px] max-sm:w-[18px]"
-                )}
-              />
+              >
+                <FiTrash
+                  className={twMerge(
+                    "stroke-red w-[20px] h-[20px] cursor-pointer",
+                    "max-sm:h-[18px] max-sm:w-[18px]"
+                  )}
+                />
+                <FaRegEdit
+                  className={twMerge(
+                    "fill-bg-blue w-[20px] h-[20px] cursor-pointer",
+                    "max-sm:h-[18px] max-sm:w-[18px]"
+                  )}
+                />
+              </div>
             </>
           )}
         </div>
@@ -55,10 +64,10 @@ export function Comment({ comment }: CommentProps) {
         <span
           className={twMerge(
             "self-end italic text-[14px]",
-            "max-sm:text-[10px]"
+            "max-sm:text-[10px] max-sm:self-start max-sm:mt-[5px]"
           )}
         >
-          Publicado em {formattedPublicationDate}.
+          Publicado em {formattedPublicationDate}h.
         </span>
       </div>
 
