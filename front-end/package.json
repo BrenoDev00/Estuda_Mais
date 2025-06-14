@@ -1,6 +1,7 @@
 {
-  "name": "task-app",
-  "version": "0.1.0",
+  "name": "estuda-mais",
+  "description": "Aplicação web para gerenciar estudos.",
+  "version": "1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

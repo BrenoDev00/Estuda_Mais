@@ -22,7 +22,7 @@ export function Comment({ comment }: CommentProps) {
 
   return (
     <CommentContainer className="flex flex-col gap-[11px]">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-4">
         <div
           className={twMerge("flex items-center gap-[15px]", "max-sm:flex-col")}
         >

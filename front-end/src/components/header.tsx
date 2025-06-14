@@ -8,6 +8,8 @@ import { Button, LabelBox } from "../components";
 export const Header = () => {
   const { data: session, status } = useSession();
 
+  const formattedUserName = session?.user?.name?.split(" ")[0];
+
   return (
     <header
       className={twMerge(
@@ -15,7 +17,12 @@ export const Header = () => {
         "bg-bg-black max-md:justify-between px-[30px]"
       )}
     >
-      <nav className="flex items-center gap-[20px] font-normal">
+      <nav
+        className={twMerge(
+          "flex items-center gap-[20px] font-normal",
+          "max-sm:flex-col"
+        )}
+      >
         <Link
           href={"/"}
           className={twMerge(
@@ -24,7 +31,7 @@ export const Header = () => {
           )}
         >
           <p className="flex items-center gap text-white">
-            Tarefas <span className="text-red font-semibold">+</span>
+            Estuda <span className="text-red font-semibold">+</span>
           </p>
         </Link>
 
@@ -43,15 +50,25 @@ export const Header = () => {
       </nav>
 
       {status === "loading" ? (
-        <Button type="button" variant="primary">
+        <Button
+          className={twMerge("max-sm:self-start max-sm:mt-[5px]")}
+          type="button"
+          variant="primary"
+        >
           Carregando...
         </Button>
       ) : session ? (
-        <Button type="button" variant="primary" onClick={() => signOut()}>
-          Olá, {session?.user?.name}
+        <Button
+          className={twMerge("max-sm:self-start max-sm:mt-[5px]")}
+          type="button"
+          variant="primary"
+          onClick={() => signOut()}
+        >
+          Olá, {formattedUserName}
         </Button>
       ) : (
         <Button
+          className={twMerge("max-sm:self-start max-sm:mt-[5px]")}
           type="button"
           variant="primary"
           onClick={() => signIn("google")}
