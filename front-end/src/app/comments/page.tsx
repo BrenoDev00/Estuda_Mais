@@ -5,10 +5,17 @@ import { twMerge } from "tailwind-merge";
 import { Header, Textarea, Button, Comment, ErrorModal } from "@/components";
 import Loading from "../loading";
 import { useGetComments } from "@/hooks";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, redirect } from "next/navigation";
 import { ListCommentsInterface } from "@/types/comment/comment.type";
+import { useSession } from "next-auth/react";
 
 export default function CommentsPage() {
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") redirect("/");
+  }, [status]);
+
   const { comments, commentListError, commentListLoading, refetch } =
     useGetComments();
 
