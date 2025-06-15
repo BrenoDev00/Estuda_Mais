@@ -16,11 +16,12 @@ export default function CommentsPage() {
   const currentTaskId = searchParams.get("taskId") as string;
 
   const currentTask = comments?.find(
-    (comment) => comment?.task?.taskId === currentTaskId
+    (comment) => comment?.task?.id === currentTaskId
   ) as ListCommentsInterface;
 
   const commentsByTask = comments?.filter(
-    (comment) => comment?.task?.taskId === currentTaskId
+    (comment) =>
+      comment?.task?.id === currentTaskId && comment?.comment !== null
   ) as ListCommentsInterface[];
 
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(true);
@@ -102,28 +103,30 @@ export default function CommentsPage() {
           </form>
         </section>
 
-        <section
-          className={twMerge(
-            "px-[128px] mt-[57px]",
-            "w-[1024px] max-md:w-[800px] max-sm:w-[600px]",
-            "flex flex-col gap-[14px]"
-          )}
-        >
-          <h2
+        {commentsByTask?.length > 0 && (
+          <section
             className={twMerge(
-              "font-bold text-[20px]",
-              "max-md:text-[16px] max-sm:text-[14px]"
+              "px-[128px] mt-[57px]",
+              "w-[1024px] max-md:w-[800px] max-sm:w-[600px]",
+              "flex flex-col gap-[14px]"
             )}
           >
-            Todos comentários
-          </h2>
+            <h2
+              className={twMerge(
+                "font-bold text-[20px]",
+                "max-md:text-[16px] max-sm:text-[14px]"
+              )}
+            >
+              Todos comentários
+            </h2>
 
-          <div className="flex flex-col gap-[14px]">
-            {commentsByTask?.map((comment) => {
-              return <Comment key={comment.id} comment={comment} />;
-            })}
-          </div>
-        </section>
+            <div className="flex flex-col gap-[14px]">
+              {commentsByTask?.map((comment) => {
+                return <Comment key={comment.id} comment={comment} />;
+              })}
+            </div>
+          </section>
+        )}
       </main>
     </>
   );

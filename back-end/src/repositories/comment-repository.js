@@ -7,7 +7,7 @@ export class CommentRepository extends BaseRepository {
       return await super.selectWithJoinOrderedBy(
         commentColumnsToGet,
         "public.comment",
-        "INNER JOIN",
+        "RIGHT JOIN",
         "public.task",
         "public.comment.task_id",
         "public.task.id",

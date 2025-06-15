@@ -9,6 +9,6 @@ export const commentColumnsToGet = [
   "public.comment.comment",
   "public.comment.created_at",
   "public.comment.user_name",
-  "public.comment.task_id",
+  "public.task.id as task_id",
   "public.task.task",
 ];

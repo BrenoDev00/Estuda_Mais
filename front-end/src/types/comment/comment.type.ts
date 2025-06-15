@@ -4,7 +4,7 @@ export interface ListCommentsInterface {
   createdAt: string;
   userName: string;
   task: {
-    taskId: string;
+    id: string;
     task: string;
   };
 }

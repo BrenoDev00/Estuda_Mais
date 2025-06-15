@@ -11,7 +11,7 @@ export class CommentController {
         createdAt: values.createdAt,
         userName: values.userName,
         task: {
-          taskId: values.taskId,
+          id: values.taskId,
           task: values.task,
         },
       };
