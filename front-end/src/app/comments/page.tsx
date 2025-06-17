@@ -9,19 +9,23 @@ import {
   Comment,
   ErrorModal,
   FormFieldErrorMessage,
+  SuccessModal,
 } from "@/components";
 import Loading from "../loading";
-import { useGetComments } from "@/hooks";
+import { useGetComments, useCreateComment } from "@/hooks";
 import { useSearchParams, redirect } from "next/navigation";
-import { ListCommentsInterface } from "@/types/comment/comment.type";
+import {
+  ListCommentsInterface,
+  NewCommentInterface,
+} from "@/types/comment/comment.type";
 import { useSession } from "next-auth/react";
 import { commentSchema } from "@/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NewCommentType } from "@/types/schemas";
+import { CommentSchemaType } from "@/types/schemas";
 
 export default function CommentsPage() {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
 
   useEffect(() => {
     if (status === "unauthenticated") redirect("/");
@@ -32,12 +36,14 @@ export default function CommentsPage() {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewCommentType>({
+  } = useForm<CommentSchemaType>({
     resolver: zodResolver(commentSchema),
   });
 
   const { comments, commentListError, commentListLoading, refetch } =
     useGetComments();
+
+  const { createCommentMutation } = useCreateComment();
 
   const searchParams = useSearchParams();
   const currentTaskId = searchParams.get("taskId") as string;
@@ -53,12 +59,22 @@ export default function CommentsPage() {
 
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(true);
 
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(true);
+
   useEffect(() => {
     refetch();
   }, [refetch]);
 
-  async function handleFormSubmit(values: NewCommentType) {
-    alert(values.comment);
+  function handleFormSubmit(data: CommentSchemaType): void {
+    const result: NewCommentInterface = {
+      ...data,
+      taskId: currentTaskId,
+      userName: session?.user?.name as string,
+    };
+
+    reset();
+
+    createCommentMutation.mutate(result);
   }
 
   if (commentListError)
@@ -70,7 +86,25 @@ export default function CommentsPage() {
       />
     );
 
-  if (commentListLoading) return <Loading />;
+  if (createCommentMutation.error)
+    return (
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+        message="Não foi possível adicionar o comentário. Tente novamente."
+      />
+    );
+
+  if (createCommentMutation.isSuccess)
+    return (
+      <SuccessModal
+        message="Comentário cadastrado com sucesso!"
+        onClose={() => setIsSuccessModalOpen(false)}
+        isOpen={isSuccessModalOpen}
+      />
+    );
+
+  if (commentListLoading || createCommentMutation.isPending) return <Loading />;
 
   return (
     <>

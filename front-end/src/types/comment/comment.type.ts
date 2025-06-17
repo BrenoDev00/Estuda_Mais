@@ -1,3 +1,5 @@
+import { CommentSchemaType } from "../schemas";
+
 export interface ListCommentsInterface {
   id: string;
   comment: string;
@@ -10,3 +12,8 @@ export interface ListCommentsInterface {
 }
 
 export type CommentType = Omit<ListCommentsInterface, "task">;
+
+export interface NewCommentInterface extends CommentSchemaType {
+  taskId: string;
+  userName: string;
+}

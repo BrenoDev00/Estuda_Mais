@@ -1,5 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { ListCommentsInterface } from "@/types/comment/comment.type";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  ListCommentsInterface,
+  NewCommentInterface,
+} from "@/types/comment/comment.type";
 import axios from "axios";
 import { BASE_API_URL } from "@/utils/base-api-url";
 
@@ -20,4 +23,28 @@ export function useGetComments() {
   });
 
   return { comments, commentListError, commentListLoading, refetch };
+}
+
+export function useCreateComment() {
+  const createCommentMutation = useMutation({
+    mutationFn: async (data: NewCommentInterface): Promise<void> => {
+      const { comment, taskId, userName } = data;
+
+      const commentValues: Omit<NewCommentInterface, "taskId"> = {
+        comment,
+        userName,
+      };
+
+      await axios.post<NewCommentInterface>(
+        `${BASE_API_URL}/comments/${taskId}`,
+        commentValues,
+        {
+          withCredentials: true,
+        }
+      );
+    },
+    retry: false,
+  });
+
+  return { createCommentMutation };
 }
