@@ -57,13 +57,23 @@ export default function CommentsPage() {
       comment?.task?.id === currentTaskId && comment?.comment !== null
   ) as ListCommentsInterface[];
 
-  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(true);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
 
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(true);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    if (createCommentMutation.isSuccess) setIsSuccessModalOpen(true);
+
+    if (commentListError || createCommentMutation.isError)
+      setIsErrorModalOpen(true);
+
     refetch();
-  }, [refetch]);
+  }, [
+    refetch,
+    createCommentMutation.isSuccess,
+    createCommentMutation.isError,
+    commentListError,
+  ]);
 
   function handleFormSubmit(data: CommentSchemaType): void {
     const result: NewCommentInterface = {
@@ -77,37 +87,22 @@ export default function CommentsPage() {
     createCommentMutation.mutate(result);
   }
 
-  if (commentListError)
-    return (
-      <ErrorModal
-        isOpen={isErrorModalOpen}
-        onClose={() => setIsErrorModalOpen(false)}
-        message="Não foi possível carregar os comentários. Tente novamente."
-      />
-    );
-
-  if (createCommentMutation.error)
-    return (
-      <ErrorModal
-        isOpen={isErrorModalOpen}
-        onClose={() => setIsErrorModalOpen(false)}
-        message="Não foi possível adicionar o comentário. Tente novamente."
-      />
-    );
-
-  if (createCommentMutation.isSuccess)
-    return (
-      <SuccessModal
-        message="Comentário cadastrado com sucesso!"
-        onClose={() => setIsSuccessModalOpen(false)}
-        isOpen={isSuccessModalOpen}
-      />
-    );
-
   if (commentListLoading || createCommentMutation.isPending) return <Loading />;
 
   return (
     <>
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+        message={"Ação realizada com sucesso!"}
+      />
+
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+        message={"Não foi possível realizar a ação. Tente novamente."}
+      />
+
       <Header />
       <main className="flex flex-col items-center my-[80px]">
         <section
