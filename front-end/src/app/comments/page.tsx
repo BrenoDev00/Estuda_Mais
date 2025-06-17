@@ -2,12 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { Header, Textarea, Button, Comment, ErrorModal } from "@/components";
+import {
+  Header,
+  Textarea,
+  Button,
+  Comment,
+  ErrorModal,
+  FormFieldErrorMessage,
+} from "@/components";
 import Loading from "../loading";
 import { useGetComments } from "@/hooks";
 import { useSearchParams, redirect } from "next/navigation";
 import { ListCommentsInterface } from "@/types/comment/comment.type";
 import { useSession } from "next-auth/react";
+import { commentSchema } from "@/schemas";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { NewCommentType } from "@/types/schemas";
 
 export default function CommentsPage() {
   const { status } = useSession();
@@ -15,6 +26,15 @@ export default function CommentsPage() {
   useEffect(() => {
     if (status === "unauthenticated") redirect("/");
   }, [status]);
+
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewCommentType>({
+    resolver: zodResolver(commentSchema),
+  });
 
   const { comments, commentListError, commentListLoading, refetch } =
     useGetComments();
@@ -36,6 +56,10 @@ export default function CommentsPage() {
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  async function handleFormSubmit(values: NewCommentType) {
+    alert(values.comment);
+  }
 
   if (commentListError)
     return (
@@ -77,8 +101,8 @@ export default function CommentsPage() {
             "w-[1024px] max-md:w-[800px] max-sm:w-[600px]"
           )}
         >
-          <form>
-            <div className="flex flex-col gap-[14px]">
+          <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <div className="flex flex-col gap-[13px]">
               <h1
                 className={twMerge(
                   "font-bold text-[20px]",
@@ -97,7 +121,11 @@ export default function CommentsPage() {
                   "w-full resize-none",
                   "border border border-solid border-dark-gray"
                 )}
+                register={register("comment")}
               />
+              {errors.comment && (
+                <FormFieldErrorMessage message={errors.comment.message!} />
+              )}
             </div>
 
             <Button

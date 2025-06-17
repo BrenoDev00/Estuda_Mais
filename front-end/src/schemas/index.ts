@@ -1,1 +1,2 @@
-export * from "./new-task-schema";
+export * from "./task-schema";
+export * from "./comment-schema";
