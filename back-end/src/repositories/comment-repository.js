@@ -1,5 +1,8 @@
 import { BaseRepository } from "./base-repository.js";
-import { commentColumnsToGet } from "../utils/constants/table-columns.js";
+import {
+  commentColumnsToGet,
+  commentColumnsToInsert,
+} from "../utils/constants/table-columns.js";
 
 export class CommentRepository extends BaseRepository {
   async getCommentsByMostRecentDate() {
@@ -13,6 +16,18 @@ export class CommentRepository extends BaseRepository {
         "public.task.id",
         "public.comment.created_at",
         "DESC"
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createComment(values) {
+    try {
+      return await super.insertInto(
+        "public.comment",
+        commentColumnsToInsert,
+        values
       );
     } catch (error) {
       throw error;

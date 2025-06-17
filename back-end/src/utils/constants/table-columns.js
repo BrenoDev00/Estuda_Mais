@@ -12,3 +12,5 @@ export const commentColumnsToGet = [
   "public.task.id as task_id",
   "public.task.task",
 ];
+
+export const commentColumnsToInsert = ["comment", "task_id", "user_name"];

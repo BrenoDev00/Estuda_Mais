@@ -9,3 +9,7 @@ commentRouter.get("/", async (request, response) => {
     response
   );
 });
+
+commentRouter.post("/:taskId", async (request, response) => {
+  return await new CommentController().createComment(request, response);
+});
