@@ -1,7 +1,7 @@
 {
-  "name": "api-task-plus",
+  "name": "api-estuda-mais",
   "version": "1.0.0",
-  "description": "API RESTfull da aplicação Task Plus.",
+  "description": "API RESTfull da aplicação Estuda Mais.",
   "main": "src/app.js",
   "scripts": {
     "dev": "node --watch .",
