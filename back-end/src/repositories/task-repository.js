@@ -8,7 +8,7 @@ import {
 export class TaskRepository extends BaseRepository {
   async getTaskById(taskId) {
     try {
-      return await super.selectById(taskColumnsToGet, "public.task", taskId);
+      return await super.selectById(["id"], "public.task", taskId);
     } catch (error) {
       throw error;
     }
