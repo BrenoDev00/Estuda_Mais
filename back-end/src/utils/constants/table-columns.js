@@ -9,8 +9,14 @@ export const commentColumnsToGet = [
   "public.comment.comment",
   "public.comment.created_at",
   "public.comment.user_name",
+  "public.comment.user_email",
   "public.task.id as task_id",
   "public.task.task",
 ];
 
-export const commentColumnsToInsert = ["comment", "task_id", "user_name"];
+export const commentColumnsToInsert = [
+  "comment",
+  "task_id",
+  "user_name",
+  "user_email",
+];
