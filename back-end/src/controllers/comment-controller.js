@@ -66,4 +66,32 @@ export class CommentController {
       .status(201)
       .send({ message: "Comentário adicionado com sucesso!" });
   }
+
+  async deleteCommentById(request, response) {
+    const { id } = request.params;
+
+    const idValidation = uuidSchema.safeParse(id);
+
+    if (!idValidation.success)
+      return response.status(400).send(idValidation.error.errors);
+
+    const searchedId = await new CommentRepository().getCommentById(id);
+
+    if (!searchedId.length)
+      return response
+        .status(404)
+        .send({ message: "Comentário não encontrado." });
+
+    try {
+      await new CommentRepository().deleteCommentById(id);
+
+      return response
+        .status(200)
+        .send({ message: "Comentário removido com sucesso!" });
+    } catch (error) {
+      return response
+        .status(500)
+        .send({ message: "Erro interno do servidor." });
+    }
+  }
 }

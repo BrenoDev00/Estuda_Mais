@@ -5,6 +5,14 @@ import {
 } from "../utils/constants/table-columns.js";
 
 export class CommentRepository extends BaseRepository {
+  async getCommentById(commentId) {
+    try {
+      return await super.selectById(["id"], "public.comment", commentId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getCommentsByMostRecentDate() {
     try {
       return await super.selectWithJoinOrderedBy(
@@ -29,6 +37,14 @@ export class CommentRepository extends BaseRepository {
         commentColumnsToInsert,
         values
       );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteCommentById(commentId) {
+    try {
+      return await super.deleteById("public.comment", commentId);
     } catch (error) {
       throw error;
     }
