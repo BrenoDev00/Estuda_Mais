@@ -36,7 +36,7 @@ export function Comment({ comment }: CommentProps) {
             {comment.userName}
           </span>
 
-          {comment.userName === session?.user?.name && (
+          {comment.userEmail === session?.user?.email && (
             <>
               <div
                 className={twMerge(
@@ -67,7 +67,10 @@ export function Comment({ comment }: CommentProps) {
             "max-sm:text-[10px] max-sm:self-start max-sm:mt-[5px]"
           )}
         >
-          Publicado em {formattedPublicationDate}h.
+          Publicado em{" "}
+          <time dateTime={comment?.createdAt}>
+            {formattedPublicationDate}h.
+          </time>
         </span>
       </div>
 

@@ -28,11 +28,12 @@ export function useGetComments() {
 export function useCreateComment() {
   const createCommentMutation = useMutation({
     mutationFn: async (data: NewCommentInterface): Promise<void> => {
-      const { comment, taskId, userName } = data;
+      const { comment, taskId, userName, userEmail } = data;
 
       const commentValues: Omit<NewCommentInterface, "taskId"> = {
         comment,
         userName,
+        userEmail,
       };
 
       await axios.post<NewCommentInterface>(

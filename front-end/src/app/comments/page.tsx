@@ -80,6 +80,7 @@ export default function CommentsPage() {
       ...data,
       taskId: currentTaskId,
       userName: session?.user?.name as string,
+      userEmail: session?.user?.email as string,
     };
 
     reset();
