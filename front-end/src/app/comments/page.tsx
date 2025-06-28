@@ -11,6 +11,7 @@ import {
   FormFieldErrorMessage,
   SuccessModal,
 } from "@/components";
+import { CommentModal } from "./components";
 import Loading from "../loading";
 import { useGetComments, useCreateComment } from "@/hooks";
 import { useSearchParams, redirect } from "next/navigation";
@@ -61,6 +62,17 @@ export default function CommentsPage() {
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
 
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
+
+  const [modalMode, setModalMode] = useState<
+    "deleteComment" | "updateComment" | null
+  >(null);
+
+  const [selectedComment, setSelectedComment] = useState<Omit<
+    ListCommentsInterface,
+    "userEmail" | "task"
+  > | null>(null);
+
   useEffect(() => {
     if (createCommentMutation.isSuccess) setIsSuccessModalOpen(true);
 
@@ -88,6 +100,26 @@ export default function CommentsPage() {
     createCommentMutation.mutate(result);
   }
 
+  function handleOpenCommentDeleteModal(
+    comment: Omit<ListCommentsInterface, "userEmail" | "task">
+  ) {
+    setIsCommentModalOpen(true);
+
+    setModalMode("deleteComment");
+
+    setSelectedComment(comment);
+  }
+
+  function handleOpenCommentUpdateModal(
+    comment: Omit<ListCommentsInterface, "userEmail" | "task">
+  ) {
+    setIsCommentModalOpen(true);
+
+    setModalMode("updateComment");
+
+    setSelectedComment(comment);
+  }
+
   if (commentListLoading || createCommentMutation.isPending) return <Loading />;
 
   return (
@@ -102,6 +134,15 @@ export default function CommentsPage() {
         isOpen={isErrorModalOpen}
         onClose={() => setIsErrorModalOpen(false)}
         message={"Não foi possível realizar a ação. Tente novamente."}
+      />
+
+      <CommentModal
+        isOpen={isCommentModalOpen}
+        onClose={() => setIsCommentModalOpen(false)}
+        modalMode={modalMode}
+        commentValues={selectedComment}
+        closeModalAfterSubmission={() => setIsErrorModalOpen(false)}
+        refetch={refetch}
       />
 
       <Header />
@@ -187,7 +228,14 @@ export default function CommentsPage() {
 
             <div className="flex flex-col gap-[14px]">
               {commentsByTask?.map((comment) => {
-                return <Comment key={comment.id} comment={comment} />;
+                return (
+                  <Comment
+                    key={comment.id}
+                    comment={comment}
+                    handleCommentDelete={handleOpenCommentDeleteModal}
+                    handleCommentUpdate={handleOpenCommentUpdateModal}
+                  />
+                );
               })}
             </div>
           </section>

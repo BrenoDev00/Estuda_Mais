@@ -1,8 +1,14 @@
-import { CommentType } from "@/types/comment/comment.type";
+import {
+  CommentType,
+  ListCommentsInterface,
+} from "@/types/comment/comment.type";
 
 export interface CommentProps {
   comment: CommentType;
-  //   taskValues: ListTasksInterface;
-  //   handleTaskDelete: (taskValues: ListTasksInterface) => void;
-  //   handleTaskUpdate: (taskValues: ListTasksInterface) => void;
+  handleCommentDelete: (
+    commentValues: Omit<ListCommentsInterface, "userEmail" | "task">
+  ) => void;
+  handleCommentUpdate: (
+    commentValues: Omit<ListCommentsInterface, "userEmail" | "task">
+  ) => void;
 }

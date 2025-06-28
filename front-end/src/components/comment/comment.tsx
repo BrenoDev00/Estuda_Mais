@@ -7,7 +7,11 @@ import { FiTrash } from "react-icons/fi";
 import { FaRegEdit } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 
-export function Comment({ comment }: CommentProps) {
+export function Comment({
+  comment,
+  handleCommentDelete,
+  handleCommentUpdate,
+}: CommentProps) {
   const { data: session } = useSession();
 
   const formattedPublicationDate = new Date(comment?.createdAt)
@@ -45,12 +49,14 @@ export function Comment({ comment }: CommentProps) {
                 )}
               >
                 <FiTrash
+                  onClick={() => handleCommentDelete(comment)}
                   className={twMerge(
                     "stroke-red w-[20px] h-[20px] cursor-pointer",
                     "max-sm:h-[18px] max-sm:w-[18px]"
                   )}
                 />
                 <FaRegEdit
+                  onClick={() => handleCommentUpdate(comment)}
                   className={twMerge(
                     "fill-bg-blue w-[20px] h-[20px] cursor-pointer",
                     "max-sm:h-[18px] max-sm:w-[18px]"
