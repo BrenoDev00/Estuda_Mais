@@ -102,7 +102,7 @@ export default function CommentsPage() {
 
   function handleOpenCommentDeleteModal(
     comment: Omit<ListCommentsInterface, "userEmail" | "task">
-  ) {
+  ): void {
     setIsCommentModalOpen(true);
 
     setModalMode("deleteComment");
@@ -112,7 +112,7 @@ export default function CommentsPage() {
 
   function handleOpenCommentUpdateModal(
     comment: Omit<ListCommentsInterface, "userEmail" | "task">
-  ) {
+  ): void {
     setIsCommentModalOpen(true);
 
     setModalMode("updateComment");
@@ -141,7 +141,7 @@ export default function CommentsPage() {
         onClose={() => setIsCommentModalOpen(false)}
         modalMode={modalMode}
         commentValues={selectedComment}
-        closeModalAfterSubmission={() => setIsErrorModalOpen(false)}
+        closeModalAfterSubmission={() => setIsCommentModalOpen(false)}
         refetch={refetch}
       />
 

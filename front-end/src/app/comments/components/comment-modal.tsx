@@ -14,7 +14,7 @@ import { CommentSchemaType } from "@/types/schemas";
 import Loading from "@/app/loading";
 import { twMerge } from "tailwind-merge";
 import { CommentModalProps } from "@/types/components";
-import { useDeleteTask, useUpdateTask } from "@/hooks";
+import { useDeleteComment, useUpdateTask } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { commentSchema } from "@/schemas";
 
@@ -35,6 +35,8 @@ export const CommentModal = ({
     resolver: zodResolver(commentSchema),
   });
 
+  const { deleteCommentMutation } = useDeleteComment();
+
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
 
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
@@ -43,40 +45,42 @@ export const CommentModal = ({
     setValue("comment", commentValues?.comment as string);
   }, [setValue, commentValues?.comment]);
 
-  const { deleteTaskMutation } = useDeleteTask();
+  // const { deleteTaskMutation } = useDeleteTask();
 
   const { updateTaskMutation } = useUpdateTask();
 
-  function handleFormSubmit(formValues: CommentSchemaType) {
-    // if (modalMode == "deleteTask")
-    //   deleteTaskMutation.mutate(taskValues?.id as string);
+  function handleFormSubmit(formValues: CommentSchemaType): void {
+    if (modalMode == "deleteComment") {
+      deleteCommentMutation.mutate(commentValues?.id as string);
+      closeModalAfterSubmission();
+    }
+
     // const data: UpdateTaskInterface = {
     //   id: taskValues?.id as string,
     //   task: formValues?.task as string,
     //   isPublic: formValues?.isPublic as boolean,
     // };
     // if (modalMode == "updateTask") updateTaskMutation.mutate(data);
-    // closeModalAfterSubmission();
   }
 
   useEffect(() => {
-    if (deleteTaskMutation.isSuccess || updateTaskMutation.isSuccess) {
+    if (deleteCommentMutation.isSuccess || updateTaskMutation.isSuccess) {
       setIsSuccessModalOpen(true);
 
       refetch();
     }
 
-    if (deleteTaskMutation.isError || updateTaskMutation.isError)
+    if (deleteCommentMutation.isError || updateTaskMutation.isError)
       setIsErrorModalOpen(true);
   }, [
     refetch,
-    deleteTaskMutation.isSuccess,
-    deleteTaskMutation.isError,
+    deleteCommentMutation.isSuccess,
+    deleteCommentMutation.isError,
     updateTaskMutation.isSuccess,
     updateTaskMutation.isError,
   ]);
 
-  if (deleteTaskMutation.isPending || updateTaskMutation.isPending)
+  if (deleteCommentMutation.isPending || updateTaskMutation.isPending)
     return <Loading />;
 
   return (

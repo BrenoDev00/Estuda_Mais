@@ -49,3 +49,16 @@ export function useCreateComment() {
 
   return { createCommentMutation };
 }
+
+export function useDeleteComment() {
+  const deleteCommentMutation = useMutation({
+    mutationFn: async (commentId: string): Promise<void> => {
+      await axios.delete(`${BASE_API_URL}/comments/${commentId}`, {
+        withCredentials: true,
+      });
+    },
+    retry: false,
+  });
+
+  return { deleteCommentMutation };
+}
