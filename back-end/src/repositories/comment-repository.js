@@ -2,6 +2,7 @@ import { BaseRepository } from "./base-repository.js";
 import {
   commentColumnsToGet,
   commentColumnsToInsert,
+  commentColumnsToUpdate,
 } from "../utils/constants/table-columns.js";
 
 export class CommentRepository extends BaseRepository {
@@ -36,6 +37,19 @@ export class CommentRepository extends BaseRepository {
         "public.comment",
         commentColumnsToInsert,
         values
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateCommentById(values, commentId) {
+    try {
+      return super.updateById(
+        "public.comment",
+        commentColumnsToUpdate,
+        values,
+        commentId
       );
     } catch (error) {
       throw error;

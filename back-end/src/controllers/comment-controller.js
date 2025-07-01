@@ -1,8 +1,14 @@
 import { CommentRepository } from "../repositories/comment-repository.js";
-import { commentSchema } from "../schemas/comment-schema.js";
+import {
+  commentSchema,
+  updateCommentSchema,
+} from "../schemas/comment-schema.js";
 import { uuidSchema } from "../schemas/uuid-schema.js";
 import snakecaseKeys from "snakecase-keys";
-import { commentColumnsToInsert } from "../utils/constants/table-columns.js";
+import {
+  commentColumnsToInsert,
+  commentColumnsToUpdate,
+} from "../utils/constants/table-columns.js";
 
 export class CommentController {
   async getCommentsByMostRecentDate(request, response) {
@@ -65,6 +71,40 @@ export class CommentController {
     return response
       .status(201)
       .send({ message: "Comentário adicionado com sucesso!" });
+  }
+
+  async updateCommentById(request, response) {
+    const { id } = request.params;
+    const { body } = request;
+
+    const idValidation = uuidSchema.safeParse(id);
+
+    if (!idValidation.success)
+      return response.status(400).send(idValidation.error.errors);
+
+    const searchedCommentId = await new CommentRepository().getCommentById(id);
+
+    if (!searchedCommentId.length)
+      return response
+        .status(404)
+        .send({ message: "Comentário não encontrado." });
+
+    const bodyValidation = updateCommentSchema.safeParse(body);
+
+    if (!bodyValidation.success)
+      return response.status(400).send(bodyValidation.error.errors);
+
+    const formattedBody = snakecaseKeys(body);
+
+    const values = commentColumnsToUpdate.map(
+      (column) => formattedBody[column]
+    );
+
+    await new CommentRepository().updateCommentById(values, id);
+
+    return response
+      .status(200)
+      .send({ message: "Comentário atualizado com sucesso!" });
   }
 
   async deleteCommentById(request, response) {

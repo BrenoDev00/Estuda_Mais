@@ -20,3 +20,5 @@ export const commentColumnsToInsert = [
   "user_name",
   "user_email",
 ];
+
+export const commentColumnsToUpdate = ["comment"];

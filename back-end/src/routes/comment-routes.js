@@ -14,6 +14,10 @@ commentRouter.post("/:taskId", async (request, response) => {
   return await new CommentController().createComment(request, response);
 });
 
+commentRouter.put("/:id", async (request, response) => {
+  return await new CommentController().updateCommentById(request, response);
+});
+
 commentRouter.delete("/:id", async (request, response) => {
   return await new CommentController().deleteCommentById(request, response);
 });
