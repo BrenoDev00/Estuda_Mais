@@ -19,3 +19,8 @@ export interface NewCommentInterface extends CommentSchemaType {
   userName: string;
   userEmail: string;
 }
+
+export interface UpdateCommentInterface
+  extends Pick<ListCommentsInterface, "comment"> {
+  id: string;
+}

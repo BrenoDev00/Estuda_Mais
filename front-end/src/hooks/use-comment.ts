@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import {
   ListCommentsInterface,
   NewCommentInterface,
+  UpdateCommentInterface,
 } from "@/types/comment/comment.type";
 import axios from "axios";
 import { BASE_API_URL } from "@/utils/base-api-url";
@@ -48,6 +49,23 @@ export function useCreateComment() {
   });
 
   return { createCommentMutation };
+}
+
+export function useUpdateComment() {
+  const updateCommentMutation = useMutation({
+    mutationFn: async (data: UpdateCommentInterface): Promise<void> => {
+      const { id: commentId, comment } = data;
+
+      await axios.put<UpdateCommentInterface>(
+        `${BASE_API_URL}/comments/${commentId}`,
+        { comment },
+        { withCredentials: true }
+      );
+    },
+    retry: false,
+  });
+
+  return { updateCommentMutation };
 }
 
 export function useDeleteComment() {
