@@ -1,6 +1,6 @@
 # Estuda Mais - sistema para organizar estudos.
 ## Link da aplicação: 
-![Organo app](./organo/public/images/organo.png)
+![Estuda Mais app](./front-end/public/assets/app.png)
 ## Descrição
 - Aplicação Web para gerenciar estudos e comentar sobre tarefas adicionadas;
 ## Funcionalidades
