@@ -1,7 +1,7 @@
 # Estuda Mais - Sistema para organizar estudos.
 ![Estuda Mais app](./front-end/public/assets/app.png)
 ## Descrição
-- Aplicação Web para gerenciar estudos e comentar sobre tarefas adicionadas;
+- Aplicação Web para gerenciar estudos e comentar sobre tarefas adicionadas.
 ## Funcionalidades
 - Autenticação de usuário;
 - Cadastrar, listar, editar e remover tarefas;
