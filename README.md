@@ -1,4 +1,4 @@
-# Estuda Mais - sistema para organizar estudos.
+# Estuda Mais - Sistema para organizar estudos.
 ![Estuda Mais app](./front-end/public/assets/app.png)
 ## Descrição
 - Aplicação Web para gerenciar estudos e comentar sobre tarefas adicionadas;
