@@ -26,11 +26,15 @@
 - Helmet: definição de cabeçalho HTTP da API;
 - Cors: utilizado para lidar com CORS;
 - PostgreSQL: banco de dados relacional utilizado para armazenar dados da aplicação;
+- Postman: utilizado para testar os endpoints da API;
 - ESLint e Prettier: estilo de código e formatação;
 - draw.io: utilizado para modelagem de dados do banco de dados;
-- Excel: utilizado para desenvolver o dicionário de dados do banco de dados.
+- Excel: utilizado para desenvolver o dicionário de dados do banco de dados;
+- Gitflow: fluxo de trabalho entre branches develop e main;
+- Conventional Commits: organização de commits.
 ## Como rodar a aplicação
-- Clone o repositório localmente;
+- Primeiramente, é necessário ter o PostgreSQL instalado na máquina e criar um banco de dados. Depois, execute o script SQL [schema-config](./back-end/src/config/schema-config.sql) no banco de dados criado;
+- Após configurar a estrutura do banco de dados, clone o repositório localmente;
 - Em seguida, selecione o caminho das pastas front-end e back-end e execute o comando npm install em cada uma destas 2 pastas para instalar as dependências da aplicação;
 - Depois, execute o comando npm run dev tanto no caminho da pasta front-end como também na pasta back-end que irá rodar o servidor possivelmente na porta 3001 e o front-end possivelmente na porta 3000 localmente;
 - Observação: é necessário adicionar um arquivo chamado .env na raiz das pastas front-end e back-end e, em seguida, preencher com as variáveis de ambiente conforme exemplo dos arquivos .env.example.
