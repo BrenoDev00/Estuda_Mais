@@ -35,6 +35,7 @@
 ## Como rodar a aplicação
 - Primeiramente, é necessário ter o PostgreSQL instalado na máquina e criar um banco de dados. Depois, execute o script SQL [schema-config](./back-end/src/config/schema-config.sql) no banco de dados criado;
 - Após configurar a estrutura do banco de dados, clone o repositório localmente;
+- Depois de clonar o repositório, é necessário configurar um google client secret e um google client id conforme a [documentação](https://developers.google.com/identity/protocols/oauth2) do Google. Também é preciso ter um jwt secret que pode ser obtido por algum gerador de tokens na web;
 - Em seguida, selecione o caminho das pastas front-end e back-end e execute o comando npm install em cada uma destas 2 pastas para instalar as dependências da aplicação;
 - Depois, execute o comando npm run dev tanto no caminho da pasta front-end como também na pasta back-end que irá rodar o servidor possivelmente na porta 3001 e o front-end possivelmente na porta 3000 localmente;
 - Observação: é necessário adicionar um arquivo chamado .env na raiz das pastas front-end e back-end e, em seguida, preencher com as variáveis de ambiente conforme exemplo dos arquivos .env.example.
