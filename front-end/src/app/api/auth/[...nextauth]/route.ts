@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GooglePovider from "next-auth/providers/google";
 
-export const authOptions = {
+const authOptions = {
   providers: [
     GooglePovider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
