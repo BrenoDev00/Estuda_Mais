@@ -17,7 +17,9 @@
 - TypeScript: benefícios da tipagem estática;
 - Tailwind CSS: utilização de classes utilitárias e personalização de tema com variáveis;
 - React Icons: pacote de ícones;
-- ESLint e Prettier: estilo de código e formatação.
+- ESLint e Prettier: estilo de código e formatação;
+- Gitflow: fluxo de trabalho entre branches develop e main;
+- Conventional Commits: organização de commits.
 ### Back-end
 - Express: framework utilizado para estruturar a API RESTfull;
 - Node.js e JavaScript: utilizados para desenvolver a API;
