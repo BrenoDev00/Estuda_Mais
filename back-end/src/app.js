@@ -12,7 +12,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://estuda-mais-two.vercel.app/",
     credentials: true,
   })
 );
