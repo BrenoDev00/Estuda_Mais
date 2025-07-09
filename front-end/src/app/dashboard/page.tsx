@@ -73,7 +73,7 @@ export default function DashboardPage() {
 
   function handleTaskShare(taskId: string): void {
     navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_URL}/comments?taskId=${taskId}`
+      `estuda-mais-git-main-brenos-projects-d9dde81c.vercel.app/comments?taskId=${taskId}`
     );
   }
 
