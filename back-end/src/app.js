@@ -4,6 +4,7 @@ import helmet from "helmet";
 import { taskRouter } from "./routes/task-routes.js";
 import { commentRouter } from "./routes/comment-routes.js";
 import { totalRecordsRouter } from "./routes/total-records-routes.js";
+import { allowedOrigins } from "./utils/constants/allowed-cors-origins.js";
 import cors from "cors";
 
 const app = express();
@@ -12,7 +13,14 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: "https://estuda-mais-two.vercel.app/",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+
     credentials: true,
   })
 );
