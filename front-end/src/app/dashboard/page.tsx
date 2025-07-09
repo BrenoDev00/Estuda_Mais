@@ -75,6 +75,8 @@ export default function DashboardPage() {
     navigator.clipboard.writeText(
       `estuda-mais-git-main-brenos-projects-d9dde81c.vercel.app/comments?taskId=${taskId}`
     );
+
+    //Substitua a url para "http://localhost:sua-porta-local/comments?taskId=${taskId}" se estiver rodando localmente.
   }
 
   function handleOpenTaskDeleteModal(taskValues: ListTasksInterface): void {
